@@ -1,4 +1,5 @@
 from Game.Utils import COLORS
+import json
 
 class Cell:
     def __init__(self, type: str):
@@ -41,11 +42,20 @@ class Cell:
                 self.density = None
 
 class Grid:
-    def __init__(self, rows:int, cols:int):
+    def __init__(self, rows:int, cols:int, t:str="VOID"):
         self.grid = [
-            [Cell("VOID") for _ in range(cols)] for _ in range(rows)
+            [Cell(t) for _ in range(cols)] for _ in range(rows)
         ]
     
+    def __str__(self) -> str:
+        string = "["
+        for line in self.grid:
+            string += "\n["
+            for c in line:
+                string += f" {c.type} "
+            string += "]"
+        return string + "\n]"
+
     def changeCell(self, cellPosition: tuple[int, int], cell: Cell):
         row, col = cellPosition
         self.grid[row][col] = cell
@@ -56,3 +66,7 @@ class Grid:
         temp_cell = self.grid[row1][col1]
         self.grid[row1][col1] = self.grid[row2][col2]
         self.grid[row2][col2] = temp_cell
+
+    def saveGrid(self, path: str):
+        with open(path, 'w') as json_file:
+            json.dump(self.grid, json_file)
