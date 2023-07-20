@@ -5,7 +5,7 @@ class Window:
     def __init__(self, name) -> None:
         self.WINDOW = None
         self.name = name
-        self.grid = Grid(ROWS, COLS, "WATER")
+        self.grid = Grid(ROWS, COLS, "VOID")
 
     def __openWindow(self):
         self.WINDOW = pg.display.set_mode((WIDTH, HEIGHT))
@@ -21,10 +21,21 @@ class Window:
                         PX_SIZE, PX_SIZE
                     )
                 )
-        pg.display.update()
+        if DRAW_GRID:
+            for i in range(ROWS):
+                pg.draw.line(
+                    self.WINDOW, COLORS["BLACK"], 
+                    (0, i * PX_SIZE), (WIDTH, i * PX_SIZE)
+                )
+            for j in range(COLS):
+                pg.draw.line(
+                    self.WINDOW, COLORS["BLACK"], 
+                    (j * PX_SIZE, 0), (j * PX_SIZE, HEIGHT - TOOLBAR_HEIGHT)
+                )
 
     def draw(self):
-        pass
+        self.drawGrid()
+        pg.display.update()
 
     def run(self):
         running = True
@@ -38,6 +49,6 @@ class Window:
                     case pg.QUIT: 
                         print("Event: close button")
                         running = False
-            self.drawGrid()
+            self.draw()
         print("Quiting pygame")
         pg.quit()
