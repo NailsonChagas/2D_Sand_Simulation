@@ -2,10 +2,11 @@ from Game.Utils import *
 from Game.Cell import *
 
 class Window:
-    def __init__(self, name) -> None:
+    def __init__(self, name: str, savePath: str) -> None:
         self.WINDOW = None
         self.name = name
         self.grid = Grid(ROWS, COLS, "VOID")
+        self.savePath = savePath
 
     def __openWindow(self):
         self.WINDOW = pg.display.set_mode((WIDTH, HEIGHT))
@@ -48,6 +49,7 @@ class Window:
                 match event.type:
                     case pg.QUIT: 
                         print("Event: close button")
+                        self.grid.saveGrid(self.savePath)
                         running = False
             self.draw()
         print("Quiting pygame")

@@ -41,20 +41,20 @@ class Cell:
                 self.colision = None
                 self.density = None
 
+    def to_dict(self):
+        return {
+            "type": self.type,
+            "gravity": self.gravity,
+            "color": self.color,
+            "colision": self.colision,
+            "density": self.density
+        }
+
 class Grid:
     def __init__(self, rows:int, cols:int, t:str="VOID"):
         self.grid = [
             [Cell(t) for _ in range(cols)] for _ in range(rows)
         ]
-    
-    def __str__(self) -> str:
-        string = "["
-        for line in self.grid:
-            string += "\n["
-            for c in line:
-                string += f" {c.type} "
-            string += "]"
-        return string + "\n]"
 
     def changeCell(self, cellPosition: tuple[int, int], cell: Cell):
         row, col = cellPosition
@@ -68,5 +68,6 @@ class Grid:
         self.grid[row2][col2] = temp_cell
 
     def saveGrid(self, path: str):
+        grid_data = [[cell.to_dict() for cell in row] for row in self.grid]
         with open(path, 'w') as json_file:
-            json.dump(self.grid, json_file)
+            json.dump(grid_data, json_file, indent=4)
