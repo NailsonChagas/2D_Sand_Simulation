@@ -18,7 +18,7 @@ class Window:
         self.WINDOW = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(self.name)
 
-    def drawGrid(self):
+    def __drawGrid(self):
         for i, row in enumerate(self.grid.grid):
             for j, pixel in enumerate(row):
                 pg.draw.rect(
@@ -40,11 +40,11 @@ class Window:
                     (j * PX_SIZE, 0), (j * PX_SIZE, HEIGHT - TOOLBAR_HEIGHT)
                 )
 
-    def draw(self):
-        self.drawGrid()
+    def __draw(self):
+        self.__drawGrid()
         pg.display.update()
 
-    def handleEvents(self):
+    def __handleEvents(self):
         for event in pg.event.get():
             match event.type:
                 case pg.QUIT: 
@@ -77,8 +77,8 @@ class Window:
 
         while running:
             clock.tick(FPS)
-            running = self.handleEvents()
-            self.draw()
-            
+            running = self.__handleEvents()
+            self.__draw()
+
         print("Quiting pygame")
         pg.quit()
