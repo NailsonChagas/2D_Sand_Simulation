@@ -3,6 +3,8 @@ import pygame as pg
 pg.init() 
 pg.font.init()
 
+def get_font(size):
+    return pg.font.SysFont("comicsans", size)
 
 def getTruePos(pos: tuple[int, int]):
     x, y = pos

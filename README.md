@@ -65,6 +65,6 @@ This project is being done as a hobby so that I can introduce myself to the univ
     - density: -1 --> Can't move using density difference
 - VOID:
     - gravity: None
-    - color: BLACK
-    - colision: WHITE
+    - color: WHITE
+    - colision: None
     - density: None

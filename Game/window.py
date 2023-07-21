@@ -1,5 +1,9 @@
 from Game.Utils import *
 from Game.Cell import *
+from Game.button import Button
+
+buttonY = HEIGHT - TOOLBAR_HEIGHT/2 - 25
+widgetY = HEIGHT - TOOLBAR_HEIGHT
 
 class Mouse:
     def __init__(self) -> None:
@@ -12,6 +16,21 @@ class Window:
         self.WINDOW = None
         self.name = name
         self.grid = Grid.loadGrid(savePath) if load else Grid(ROWS, COLS, "VOID")
+        self.posText = "Cell: (-1, -1)"
+        self.buttons = [
+            Button(
+                (10, buttonY), (50,50), COLORS["BLACK"]
+            ),
+            Button(
+                (70, buttonY), (50,50), COLORS["CYAN"]
+            ),
+            Button(
+                (130, buttonY), (50,50), COLORS["YELLOW"]
+            ),
+            Button(
+                (190, buttonY), (50,50), COLORS["GRAY"]
+            )
+        ]
         self.savePath = savePath
 
     def __openWindow(self):
@@ -41,7 +60,14 @@ class Window:
                 )
 
     def __draw(self):
+        widget = Button((WIDTH - 210, buttonY), (200,50), 
+            COLORS["WHITE"], f"Pos: {self.posText}  Radius: {self.mouse.radius}", t=18
+        )
+
+        self.WINDOW.fill(BG_COLOR)
         self.__drawGrid()
+        widget.draw(self.WINDOW)
+        for b in self.buttons: b.draw(self.WINDOW)
         pg.display.update()
 
     def __handleMouse(self):
@@ -62,8 +88,8 @@ class Window:
                     print("Event: close button"); self.grid.saveGrid(self.savePath)
                     return False
                 case pg.MOUSEMOTION:
-                    x, y = getTruePos(event.pos)
-                    if y != -1 or x != -1: print("Cell: X =", x, "Y =", y)
+                    y, x = getTruePos(event.pos)
+                    self.posText = f"Cell: ({x}, {y})"
                 case pg.MOUSEBUTTONDOWN:
                     match event.button:
                         case 4: self.mouse.radius += 1 if self.mouse.radius + 1 <= 20 else 0 # scrolling up
