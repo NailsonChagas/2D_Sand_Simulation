@@ -71,13 +71,11 @@ class Window:
         return True
 
     def run(self):
-        running = True
         clock = pg.time.Clock()
         self.__openWindow()
 
-        while running:
+        while self.__handleEvents():
             clock.tick(FPS)
-            running = self.__handleEvents()
             self.__draw()
 
         print("Quiting pygame")
