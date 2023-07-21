@@ -44,30 +44,30 @@ class Window:
         self.__drawGrid()
         pg.display.update()
 
+    def __handleMouse(self):
+        if pg.mouse.get_pressed()[0]: #lef
+            pos = getTruePos(pg.mouse.get_pos())
+            check = pos[0] != -1 or pos[1] != -1
+            if check: self.grid.changeCell(pos, Cell(self.mouse.selectedType), self.mouse.radius)
+        if pg.mouse.get_pressed()[2]: #right
+            pos = getTruePos(pg.mouse.get_pos())
+            check = pos[0] != -1 or pos[1] != -1
+            if check: self.grid.changeCell(pos, Cell("VOID"), self.mouse.radius)
+
     def __handleEvents(self):
         for event in pg.event.get():
+            self.__handleMouse()
             match event.type:
                 case pg.QUIT: 
-                    print("Event: close button")
-                    self.grid.saveGrid(self.savePath)
+                    print("Event: close button"); self.grid.saveGrid(self.savePath)
                     return False
                 case pg.MOUSEMOTION:
                     x, y = getTruePos(event.pos)
-                    if y != -1 or x != -1: 
-                        print("Cell: X =", x, "Y =", y)
+                    if y != -1 or x != -1: print("Cell: X =", x, "Y =", y)
                 case pg.MOUSEBUTTONDOWN:
-                    pos = getTruePos(event.pos)
                     match event.button:
-                        case 1: # LEFT 
-                            if pos[0] != -1 or pos[1] != -1: 
-                                self.grid.changeCell(pos, Cell(self.mouse.selectedType), self.mouse.radius)
-                        case 3: # RIGHT
-                            if pos[0] != -1 or pos[1] != -1: 
-                                self.grid.changeCell(pos, Cell("VOID"), self.mouse.radius) 
-                        case 4: # scrolling up
-                            self.mouse.radius += 1 if self.mouse.radius + 1 <= 20 else 0
-                        case 5: # scrolling down
-                            self.mouse.radius -= 1 if self.mouse.radius - 1 >= 1 else 0
+                        case 4: self.mouse.radius += 1 if self.mouse.radius + 1 <= 20 else 0 # scrolling up
+                        case 5: self.mouse.radius -= 1 if self.mouse.radius - 1 >= 1 else 0 # scrolling down
         return True
 
     def run(self):
