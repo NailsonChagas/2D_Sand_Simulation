@@ -1,4 +1,4 @@
-from Game.Utils import COLORS, ROWS, COLS
+from Game.Utils import COLORS, ROWS, COLS, GRAVITY
 import json
 
 class Cell:
@@ -106,8 +106,27 @@ class Grid:
         grid_data = [[cell.toDict() for cell in row] for row in self.grid]
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
+
+    def update(self): # To DO: atualizar grid
+        # aceleração deve ser sempre somada (+=) ou subtraida (-=), nunca substituida (=)
+        Simulation.applyGravity(self.grid) # Sempre aplicar a gravidade primeiro
     
-    def getNeighbors(self, pos:tuple[int,int]):
+    @staticmethod
+    def loadGrid(path: str):
+        print("Loading state")
+        grid = Grid(ROWS, COLS)
+
+        with open(path, "r") as data:
+            gridJson = json.load(data)
+        
+        for i, row in enumerate(gridJson):
+            for j, c in enumerate(row):
+                grid.changeCell((i,j), Cell.loadCell(c["type"], c["acelerationXY"], c["velocityXY"]))
+        return grid
+
+class Simulation:
+    @staticmethod
+    def getNeighbors(grid:list[list[Cell]], pos:tuple[int,int]):
         """
         pos:tuple[int,int] = (i, j)
         return: [
@@ -126,23 +145,25 @@ class Grid:
         ]
         for (row, col) in indices:
             if 0 <= row < ROWS and 0 <= col < COLS: 
-                neighbors.append({"row": row, "col":col, "Cell":self.grid[row][col]})
+                neighbors.append({"row": row, "col":col, "Cell":grid[row][col]})
             else:
                 neighbors.append({"row": row, "col":col, "Cell":None})
         return neighbors 
-
-    def update(self): # To DO: atualizar grid
+    
+    @staticmethod
+    def applyGravity(grid:list[list[Cell]]):
+        for line in grid:
+            for c in line:
+                if c.gravity and c.acelerationXY[1] == 0: 
+                    c.acelerationXY[1] = GRAVITY
+    
+    @staticmethod
+    def applyVelocity(grid:list[list[Cell]]):
         pass
     
     @staticmethod
-    def loadGrid(path: str):
-        print("Loading state")
-        grid = Grid(ROWS, COLS)
+    def applyMovement(grid:list[list[Cell]]):
+        pass
 
-        with open(path, "r") as data:
-            gridJson = json.load(data)
-        
-        for i, row in enumerate(gridJson):
-            for j, c in enumerate(row):
-                grid.changeCell((i,j), Cell.loadCell(c["type"], c["acelerationXY"], c["velocityXY"]))
-        return grid
+    def __checkColisions(grid:list[list[Cell]]):
+        pass

@@ -121,6 +121,7 @@ class Window:
         while self.__handleEvents():
             clock.tick(FPS)
             self.__draw()
+            self.grid.update()
 
         print("Quiting pygame")
         pg.quit()
