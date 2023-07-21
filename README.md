@@ -25,7 +25,8 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - Allow increasing and decreasing the brush radius;
 - Save the grid as JSON;
 - Load the save from JSON;
-- Add menu.
+- Add menu;
+- Get cell neighbors;
 
 ## To do:
 - perform the simulations and cellular automata.

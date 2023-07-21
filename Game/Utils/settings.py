@@ -8,7 +8,7 @@ COLORS: dict[str, tuple[int, int, int]] = {
     "RED": (255, 0, 0),
     "GREEN": (50, 205, 50)
 }
-FPS:int = 120
+FPS:int = 300#120
 WIDTH, HEIGHT = (800, 900)
 ROWS = COLS = WIDTH // 4
 TOOLBAR_HEIGHT = HEIGHT - WIDTH
