@@ -29,6 +29,7 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - Get cell neighbors;
 
 ## To do:
+- remove VOID Cell, use None in the matrix instead (Case None: paint white)
 - perform the simulations and cellular automata.
 
 ## Known bugs:
