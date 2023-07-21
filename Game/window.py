@@ -4,7 +4,7 @@ from Game.Cell import *
 class Mouse:
     def __init__(self) -> None:
         self.selectedType = "SAND" # fazer um metodo de selecionar
-        self.radius = 1 # 1 a 17
+        self.radius = 1 # 1 a 20
 
 class Window:
     def __init__(self, name: str, savePath: str, load:bool = False) -> None:
@@ -65,7 +65,7 @@ class Window:
                             if pos[0] != -1 or pos[1] != -1: 
                                 self.grid.changeCell(pos, Cell("VOID"), self.mouse.radius) 
                         case 4: # scrolling up
-                            self.mouse.radius += 1 if self.mouse.radius + 1 <= 17 else 0
+                            self.mouse.radius += 1 if self.mouse.radius + 1 <= 20 else 0
                         case 5: # scrolling down
                             self.mouse.radius -= 1 if self.mouse.radius - 1 >= 1 else 0
         return True

@@ -8,29 +8,31 @@ class Cell:
         self.color = None
         self.colision = None
         self.density = None
+        self.acelerationXY = [0,0]
+        self.velocityXY = [0,0]
 
         match type:
             case "SAND":
                 self.type = "SAND"
-                self.gravity = 3
+                self.gravity = True
                 self.color = COLORS["YELLOW"]
                 self.colision = True
                 self.density = 2
             case "WATER":
                 self.type = "WATER"
-                self.gravity = 3
+                self.gravity = True
                 self.color = COLORS["CYAN"]
                 self.colision = True
                 self.density = 1
             case "GAS":
                 self.type = "GAS"
-                self.gravity = -3
+                self.gravity = True
                 self.color = COLORS["GRAY"]
                 self.colision = True
                 self.density = 0
             case "BLOCK":
                 self.type = "BLOCK"
-                self.gravity = 0
+                self.gravity = False
                 self.color = COLORS["BLACK"]
                 self.colision = True
                 self.density = -1 # não deve se mover por difereça de densidade
@@ -44,11 +46,16 @@ class Cell:
     def toDict(self):
         return {
             "type": self.type,
-            "gravity": self.gravity,
-            "color": self.color,
-            "colision": self.colision,
-            "density": self.density
+            "acelerationXY": self.acelerationXY,
+            "velocityXY": self.velocityXY
         }
+    
+    @staticmethod
+    def loadCell(type:str, aceleration:list[int], velocity:list[int]):
+        aux = Cell(type)
+        aux.acelerationXY = aceleration
+        aux.velocityXY = velocity
+        return aux
 
 class Grid:
     def __init__(self, rows:int, cols:int, t:str="VOID"):
@@ -77,7 +84,8 @@ class Grid:
         self.grid[row2][col2] = temp_cell
 
     def saveGrid(self, path: str):
-        grid_data = [[cell.type for cell in row] for row in self.grid]
+        print("Saving state")
+        grid_data = [[cell.toDict() for cell in row] for row in self.grid]
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
     
@@ -86,12 +94,13 @@ class Grid:
     
     @staticmethod
     def loadGrid(path: str):
+        print("Loading state")
         grid = Grid(ROWS, COLS)
 
         with open(path, "r") as data:
             gridJson = json.load(data)
         
         for i, row in enumerate(gridJson):
-            for j, type in enumerate(row):
-                grid.changeCell((i,j), Cell(type))
+            for j, c in enumerate(row):
+                grid.changeCell((i,j), Cell.loadCell(c["type"], c["acelerationXY"], c["velocityXY"]))
         return grid

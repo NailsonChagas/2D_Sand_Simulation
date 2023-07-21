@@ -29,6 +29,9 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - perform the simulations and cellular automata.
 - add new cells: FIRE, ACID.
 
+## Known bugs:
+- in the Grid().changeCell() positions x and y are inverted. 
+
 ## Initial state:
 - initial state of the selected cell is SAND;
 - initial state of the circumference radius is 1.
@@ -41,22 +44,22 @@ This project is being done as a hobby so that I can introduce myself to the univ
 
 ## Available cells:
 - SAND:
-    - gravity: 3
+    - gravity: TRUE
     - color: YELLOW
     - colision: True
     - density: 2
 - WATER:
-    - gravity: 3
+    - gravity: TRUE
     - color: CYAN
     - colision: True
     - density: 1
 - GAS:
-    - gravity: -3
+    - gravity: TRUE
     - color: GRAY
     - colision: True
     - density: 0
 - BLOCK:
-    - gravity: 0
+    - gravity: FALSE
     - color: BLACK
     - colision: True
     - density: -1 --> Can't move using density difference
