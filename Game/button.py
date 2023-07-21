@@ -11,7 +11,7 @@ class Button:
 
     def draw(self, window:pg.Surface):
         pg.draw.rect(
-            window, self.color, 
+            window, COLORS[self.color], 
             (
                 self.pos[0], self.pos[1],
                 self.res[0], self.res[1]
@@ -35,12 +35,10 @@ class Button:
                 )
             )
 
-    def clicked(self, mousePos:tuple[int,int], click:bool=True):
-        if click == False: return click
-
+    def clicked(self, mousePos:tuple[int,int]):
         x, y = mousePos
-        if not (x >= self.pos[0] and x <= self.pos[0] + self.res[0]):
+        if not (x >= self.pos[1] and x <= self.pos[1] + self.res[1]):
             return False
-        if not (y >= self.pos[1] and y <= self.pos[1] + self.res[1]):
+        if not (y >= self.pos[0] and y <= self.pos[0] + self.res[0]):
             return False
         return True

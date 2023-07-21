@@ -7,7 +7,7 @@ widgetY = HEIGHT - TOOLBAR_HEIGHT
 
 class Mouse:
     def __init__(self) -> None:
-        self.selectedType = "SAND" # fazer um metodo de selecionar
+        self.selectedType = "BLOCK" # fazer um metodo de selecionar
         self.radius = 1 # 1 a 20
 
 class Window:
@@ -19,25 +19,25 @@ class Window:
         self.posText = "Cell: (-1, -1)"
         self.buttons = [
             Button(
-                (10, buttonY), (50,50), COLORS["BLACK"]
+                (10, buttonY), (50,50), "BLACK"
             ),
             Button(
-                (70, buttonY), (50,50), COLORS["CYAN"]
+                (70, buttonY), (50,50), "CYAN"
             ),
             Button(
-                (130, buttonY), (50,50), COLORS["YELLOW"]
+                (130, buttonY), (50,50), "YELLOW"
             ),
             Button(
-                (190, buttonY), (50,50), COLORS["BROWN"]
+                (190, buttonY), (50,50), "BROWN"
             ),
             Button(
-                (250, buttonY), (50,50), COLORS["RED"]
+                (250, buttonY), (50,50), "RED"
             ),
             Button(
-                (310, buttonY), (50,50), COLORS["GRAY"]
+                (310, buttonY), (50,50), "GRAY"
             ),
             Button(
-                (370, buttonY), (50,50), COLORS["GREEN"]
+                (370, buttonY), (50,50), "GREEN"
             )
         ]
         self.savePath = savePath
@@ -69,8 +69,8 @@ class Window:
                 )
 
     def __draw(self):
-        widget = Button((WIDTH - 210, buttonY), (200,50), 
-            COLORS["WHITE"], f"Pos: {self.posText}  Radius: {self.mouse.radius}", t=18
+        widget = Button((WIDTH - 210, buttonY), (200,50), "WHITE", 
+            f"Pos: {self.posText}  Radius: {self.mouse.radius}", t=18
         )
         self.WINDOW.fill(BG_COLOR)
         self.__drawGrid()
@@ -79,14 +79,24 @@ class Window:
         pg.display.update()
 
     def __handleMouse(self):
-        if pg.mouse.get_pressed()[0]: #lef
-            pos = getTruePos(pg.mouse.get_pos())
-            check = pos[0] != -1 or pos[1] != -1
-            if check: self.grid.changeCell(pos, Cell(self.mouse.selectedType), self.mouse.radius)
-        if pg.mouse.get_pressed()[2]: #right
-            pos = getTruePos(pg.mouse.get_pos())
-            check = pos[0] != -1 or pos[1] != -1
-            if check: self.grid.changeCell(pos, Cell("VOID"), self.mouse.radius)
+        pos = getTruePos(pg.mouse.get_pos())
+        if pos[0] == -1 or pos[1] == -1:
+            if pg.mouse.get_pressed()[0]: #left
+                for b in self.buttons:
+                    if not b.clicked(getPos(pg.mouse.get_pos())): continue
+                    match b.color:
+                        case "YELLOW": self.mouse.selectedType = "SAND"
+                        case "BLACK": self.mouse.selectedType = "BLOCK"
+                        case "CYAN": self.mouse.selectedType = "WATER"
+                        case "GREEN": self.mouse.selectedType = "ACID"
+                        case "GRAY": self.mouse.selectedType = "GAS"
+                        case "BROWN": self.mouse.selectedType = "WOOD"
+                        case "RED": self.mouse.selectedType = "FIRE"
+        else:
+            if pg.mouse.get_pressed()[0]: #left
+                self.grid.changeCell(pos, Cell(self.mouse.selectedType), self.mouse.radius)
+            if pg.mouse.get_pressed()[2]: #right
+                self.grid.changeCell(pos, Cell("VOID"), self.mouse.radius)
 
     def __handleEvents(self):
         for event in pg.event.get():

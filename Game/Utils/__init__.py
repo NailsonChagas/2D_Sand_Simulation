@@ -11,3 +11,9 @@ def getTruePos(pos: tuple[int, int]):
     cellX = x // PX_SIZE if (y // PX_SIZE) < ROWS else -1 # -1 é nulo -> coluna
     cellY = y // PX_SIZE if (y // PX_SIZE) < ROWS else -1 # -1 é nulo -> linha
     return (cellY, cellX)
+
+def getPos(pos: tuple[int, int]):
+    x, y = pos
+    cellX = x  
+    cellY = y
+    return (cellY, cellX)
