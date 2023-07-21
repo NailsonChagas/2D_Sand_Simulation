@@ -4,6 +4,9 @@ COLORS: dict[str, tuple[int, int, int]] = {
     "GRAY": (128, 128, 128),
     "YELLOW": (255, 255, 0),
     "CYAN": (0, 255, 255),
+    "BROWN": (139, 69, 19),
+    "RED": (255, 0, 0),
+    "GREEN": (50, 205, 50)
 }
 FPS:int = 120
 WIDTH, HEIGHT = (800, 900)

@@ -28,7 +28,16 @@ class Window:
                 (130, buttonY), (50,50), COLORS["YELLOW"]
             ),
             Button(
-                (190, buttonY), (50,50), COLORS["GRAY"]
+                (190, buttonY), (50,50), COLORS["BROWN"]
+            ),
+            Button(
+                (250, buttonY), (50,50), COLORS["RED"]
+            ),
+            Button(
+                (310, buttonY), (50,50), COLORS["GRAY"]
+            ),
+            Button(
+                (370, buttonY), (50,50), COLORS["GREEN"]
             )
         ]
         self.savePath = savePath
@@ -63,7 +72,6 @@ class Window:
         widget = Button((WIDTH - 210, buttonY), (200,50), 
             COLORS["WHITE"], f"Pos: {self.posText}  Radius: {self.mouse.radius}", t=18
         )
-
         self.WINDOW.fill(BG_COLOR)
         self.__drawGrid()
         widget.draw(self.WINDOW)

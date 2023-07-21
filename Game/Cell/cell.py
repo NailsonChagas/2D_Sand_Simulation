@@ -12,16 +12,28 @@ class Cell:
         self.velocityXY = [0,0]
 
         match type:
+            case "WOOD":
+                self.type = "WOOD"
+                self.gravity = False
+                self.color = COLORS["BROWN"]
+                self.colision = True
+                self.density = 3
             case "SAND":
                 self.type = "SAND"
                 self.gravity = True
                 self.color = COLORS["YELLOW"]
                 self.colision = True
-                self.density = 2
+                self.density = 3
             case "WATER":
                 self.type = "WATER"
                 self.gravity = True
                 self.color = COLORS["CYAN"]
+                self.colision = True
+                self.density = 2
+            case "ACID":
+                self.type = "ACID"
+                self.gravity = True
+                self.color = COLORS["GREEN"]
                 self.colision = True
                 self.density = 1
             case "GAS":
@@ -29,6 +41,12 @@ class Cell:
                 self.gravity = True
                 self.color = COLORS["GRAY"]
                 self.colision = True
+                self.density = 0
+            case "FIRE":
+                self.type = "FIRE"
+                self.gravity = False
+                self.color = COLORS["RED"]
+                self.colision = False
                 self.density = 0
             case "BLOCK":
                 self.type = "BLOCK"

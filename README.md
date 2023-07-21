@@ -43,9 +43,19 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - scrolling down: reduce the radius of the circumference.
 
 ## Available cells:
+- WOOD:
+    - gravity: False
+    - color: BROWN
+    - colision: True
+    - density: 3
 - SAND:
     - gravity: TRUE
     - color: YELLOW
+    - colision: True
+    - density: 3
+- WATER:
+    - gravity: TRUE
+    - color: GREEN
     - colision: True
     - density: 2
 - WATER:
@@ -53,6 +63,11 @@ This project is being done as a hobby so that I can introduce myself to the univ
     - color: CYAN
     - colision: True
     - density: 1
+- FIRE:
+    - gravity: TRUE
+    - color: RED
+    - colision: False
+    - density: 0
 - GAS:
     - gravity: TRUE
     - color: GRAY
