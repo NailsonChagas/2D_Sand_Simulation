@@ -56,9 +56,18 @@ class Grid:
             [Cell(t) for _ in range(cols)] for _ in range(rows)
         ]
 
-    def changeCell(self, cellPosition: tuple[int, int], cell: Cell):
+    def changeCell(self, cellPosition: tuple[int, int], cell: Cell, radius:int = 1):
         row, col = cellPosition
-        self.grid[row][col] = cell
+        if radius == 1:
+            self.grid[row][col] = cell
+            return 
+        rad = radius - 1
+        for r in range(row - rad, row + rad + 1):
+            for c in range(col - rad, col + rad + 1):
+                if 0 <= r < ROWS and 0 <= c < COLS:
+                    distance = ((r - row) ** 2 + (c - col) ** 2) ** 0.5
+                    if distance <= rad:
+                        self.grid[r][c] = cell
     
     def swapCellsPosition(self, cellPosition1:tuple[int,int], cellPosition2:tuple[int,int]):
         row1, col1 = cellPosition1
