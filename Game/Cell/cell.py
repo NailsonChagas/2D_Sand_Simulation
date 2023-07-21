@@ -107,6 +107,28 @@ class Grid:
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
     
+    def getNeighbors(self, pos:tuple[int,int]):
+        """
+        return: [
+            0 1 2
+            3 X 4
+            5 6 7
+        ]
+        """
+        i, j = pos
+        neighbors = []
+        indices = [ # Define os índices dos vizinhos em torno da célula (i, j)
+            (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
+            (i, j - 1),                 (i, j + 1),
+            (i + 1, j - 1), (i + 1, j), (i + 1, j + 1)
+        ]
+        for (row, col) in indices:
+            if 0 <= row < ROWS and 0 <= col < COLS: 
+                neighbors.append({"row": row, "col":col, "Cell":self.grid[row][col]})
+            else:
+                neighbors.append({"row": row, "col":col, "Cell":None})
+        return neighbors 
+
     def update(self): # To DO: atualizar grid
         pass
     
