@@ -109,10 +109,12 @@ class Grid:
     
     def getNeighbors(self, pos:tuple[int,int]):
         """
+        pos:tuple[int,int] = (i, j)
         return: [
-            0 1 2
-            3 X 4
-            5 6 7
+                    j - 1    j     j + 1
+            i - 1     C      C       C 
+            i         C      X       C
+            i + 1     C      C       C
         ]
         """
         i, j = pos
