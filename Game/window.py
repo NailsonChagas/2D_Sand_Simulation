@@ -6,6 +6,7 @@ class Window:
         self.WINDOW = None
         self.name = name
         self.grid = Grid.loadGrid(savePath) if load else Grid(ROWS, COLS, "VOID")
+        self.selectedType = "BLOCK"
         self.savePath = savePath
 
     def __openWindow(self):
@@ -51,6 +52,13 @@ class Window:
                         print("Event: close button")
                         self.grid.saveGrid(self.savePath)
                         running = False
+                    case pg.MOUSEMOTION:
+                        x, y = event.pos
+                        cellX = x // PX_SIZE
+                        cellY = y // PX_SIZE
+                        if cellY < ROWS: # garante que ira estar fora da toolbar
+                            print("Cell: X =", cellX, "Y =", cellY)
+                
             self.draw()
         print("Quiting pygame")
         pg.quit()

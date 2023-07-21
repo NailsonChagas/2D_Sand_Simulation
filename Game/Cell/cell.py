@@ -72,6 +72,9 @@ class Grid:
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
     
+    def update(self): # To DO: atualizar grid
+        pass
+    
     @staticmethod
     def loadGrid(path: str):
         grid = Grid(ROWS, COLS)
