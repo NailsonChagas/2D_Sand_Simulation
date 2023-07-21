@@ -16,6 +16,19 @@ This project is being done as a hobby so that I can introduce myself to the univ
 3. install requirements: ```pip install -r requirements.txt```
 4. run the project: ```python main.py```
 
+## Done:
+- Open the window;
+- Draw the grid;
+- Read mouse and keyboard events;
+- Draw on the grid;
+- Allow increasing and decreasing the brush radius;
+- Save the grid as JSON;
+- Load the save from JSON.
+
+## To do:
+- perform the simulations and cellular automata.
+- add new cells: FIRE, ACID.
+
 ## Initial state:
 - initial state of the selected cell is SAND;
 - initial state of the circumference radius is 1.
