@@ -18,19 +18,19 @@ This project is being done as a hobby so that I can introduce myself to the univ
 
 ## Done:
 - Open the window;
+- Create Cells;
 - Draw the grid;
 - Read mouse and keyboard events;
 - Draw on the grid;
 - Allow increasing and decreasing the brush radius;
 - Save the grid as JSON;
-- Load the save from JSON.
+- Load the save from JSON;
+- Add menu.
 
 ## To do:
 - perform the simulations and cellular automata.
-- add new cells: FIRE, ACID.
 
 ## Known bugs:
-- in the Grid().changeCell() positions x and y are inverted. 
 
 ## Initial state:
 - initial state of the selected cell is SAND;
