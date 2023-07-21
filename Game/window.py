@@ -2,10 +2,10 @@ from Game.Utils import *
 from Game.Cell import *
 
 class Window:
-    def __init__(self, name: str, savePath: str) -> None:
+    def __init__(self, name: str, savePath: str, load:bool = False) -> None:
         self.WINDOW = None
         self.name = name
-        self.grid = Grid(ROWS, COLS, "VOID")
+        self.grid = Grid.loadGrid(savePath) if load else Grid(ROWS, COLS, "VOID")
         self.savePath = savePath
 
     def __openWindow(self):

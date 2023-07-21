@@ -1,4 +1,4 @@
-from Game.Utils import COLORS
+from Game.Utils import COLORS, ROWS, COLS
 import json
 
 class Cell:
@@ -41,7 +41,7 @@ class Cell:
                 self.colision = None
                 self.density = None
 
-    def to_dict(self):
+    def toDict(self):
         return {
             "type": self.type,
             "gravity": self.gravity,
@@ -68,6 +68,18 @@ class Grid:
         self.grid[row2][col2] = temp_cell
 
     def saveGrid(self, path: str):
-        grid_data = [[cell.to_dict() for cell in row] for row in self.grid]
+        grid_data = [[cell.type for cell in row] for row in self.grid]
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
+    
+    @staticmethod
+    def loadGrid(path: str):
+        grid = Grid(ROWS, COLS)
+
+        with open(path, "r") as data:
+            gridJson = json.load(data)
+        
+        for i, row in enumerate(gridJson):
+            for j, type in enumerate(row):
+                grid.changeCell((i,j), Cell(type))
+        return grid
