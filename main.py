@@ -1,6 +1,5 @@
-from Game import Window
+from Simulation import Window
 import os
 
-if __name__ == "__main__":
-    simulation = Window("Simulation", os.path.join(".", "grid.json"), True)
-    simulation.run()
+win = Window("Simulation", os.path.join(".", "save.json"), True)
+win.run()

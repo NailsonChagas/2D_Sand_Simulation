@@ -25,8 +25,6 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - Allow increasing and decreasing the brush radius;
 - Save the grid as JSON;
 - Load the save from JSON;
-- Add menu;
-- Get cell neighbors;
 
 ## To do:
 - remove VOID Cell, use None in the matrix instead (Case None: paint white)
@@ -45,43 +43,7 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - scrolling down: reduce the radius of the circumference.
 
 ## Available cells:
-- WOOD:
-    - gravity: False
-    - color: BROWN
-    - colision: True
-    - density: 3
-- SAND:
-    - gravity: TRUE
-    - color: YELLOW
-    - colision: True
-    - density: 3
-- WATER:
-    - gravity: TRUE
-    - color: GREEN
-    - colision: True
-    - density: 2
-- WATER:
-    - gravity: TRUE
-    - color: CYAN
-    - colision: True
-    - density: 1
-- FIRE:
-    - gravity: TRUE
-    - color: RED
-    - colision: False
-    - density: 0
-- GAS:
-    - gravity: TRUE
-    - color: GRAY
-    - colision: True
-    - density: 0
-- BLOCK:
-    - gravity: FALSE
-    - color: BLACK
-    - colision: True
-    - density: -1 --> Can't move using density difference
-- VOID:
-    - gravity: None
-    - color: WHITE
-    - colision: None
-    - density: None
+- SAND: 1
+- WATER: 2
+- ROCK: 3
+- SMOKE: 4
