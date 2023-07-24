@@ -117,5 +117,6 @@ class Events:
                         case pg.K_2: self.mouse.selectedType = "WATER"
                         case pg.K_3: self.mouse.selectedType = "ROCK"
                         case pg.K_4: self.mouse.selectedType = "SMOKE"
+                        case pg.K_r: grid.reset()
             self.__handleMouse(grid)
         return True

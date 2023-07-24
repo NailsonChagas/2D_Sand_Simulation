@@ -6,6 +6,11 @@ class Grid:
         self.matrix = [
             [None for _ in range(COLS)] for _ in range(ROWS)
         ]
+    
+    def reset(self):
+        self.matrix = [
+            [None for _ in range(COLS)] for _ in range(ROWS)
+        ]
 
     def paintCell(self, cellPosition: tuple[int, int], cell: Cell, radius: int = 1):
         row, col = cellPosition
