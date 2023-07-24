@@ -7,10 +7,7 @@ class Grid:
             [None for _ in range(COLS)] for _ in range(ROWS)
         ]
     
-    def reset(self):
-        self.matrix = [
-            [None for _ in range(COLS)] for _ in range(ROWS)
-        ]
+    def reset(self): self.matrix = [[None for _ in range(COLS)] for _ in range(ROWS)]
 
     def paintCell(self, cellPosition: tuple[int, int], cell: Cell, radius: int = 1):
         row, col = cellPosition
@@ -30,13 +27,11 @@ class Grid:
         grid_data = [
             [cell.name if cell is not None else "None" for cell in row] for row in self.matrix
         ]
-        with open(path, 'w') as json_file:
-            json.dump(grid_data, json_file, indent=4)
+        with open(path, 'w') as json_file: json.dump(grid_data, json_file, indent=4)
 
     def getNeighbors(self, pos: tuple[int, int]):
         i, j = pos
         neighbors = [{"row": None, "col": None, "Cell": None} for _ in range(8)]
-        
         # Define as posições dos vizinhos em torno da célula (i, j).
         for idx, (row, col) in enumerate([
             (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
@@ -46,10 +41,8 @@ class Grid:
             if 0 <= row < ROWS and 0 <= col < COLS:
                 neighbors[idx]["row"] = row
                 neighbors[idx]["col"] = col
-                neighbors[idx]["Cell"] = self.matrix[row][col]
-        
+                neighbors[idx]["Cell"] = self.matrix[row][col]  
         return neighbors
-
 
     @staticmethod
     def loadGrid(path:str):
