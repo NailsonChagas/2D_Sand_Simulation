@@ -54,3 +54,20 @@ class Grid:
                 if c == "None": aux.paintCell((i,j), None)
                 else: aux.paintCell((i,j), Cell(c))
         return aux
+    
+    def update(self):
+        pass
+
+class Simulation(Grid):
+    def __init__(self): pass 
+    
+    def loop(self):
+        for i, line in enumerate(self.grid.matrix):
+            for j, cell in enumerate(line):
+                if cell == None: continue
+                neighbors = self.getNeighbors((i,j))
+                self.__cellularAutomata((i,j), neighbors)
+    
+    def __cellularAutomata(self, pos:tuple[int,int], neighbors:list[None | Cell]):
+        print(pos, neighbors)
+        pass

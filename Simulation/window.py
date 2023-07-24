@@ -1,5 +1,6 @@
 from Simulation.Utils import *
-from Simulation.Grid import Grid, Cell
+#from Simulation.Grid import Grid, Cell
+from Simulation.Grid import Simulation, Cell
 
 INDEX = (-1, -1)
 RADIUS = -1
@@ -9,7 +10,7 @@ class Window:
         self.savePath = savePath
         self.events = Events()
         self.WINDOW = None
-        self.grid = Grid() if not load else Grid.loadGrid(savePath)
+        self.grid = Simulation() if not load else Simulation.loadGrid(savePath)
         self.name = name
 
     def __openWindow(self):
@@ -91,14 +92,14 @@ class Events:
     def __init__(self):
         self.mouse = Mouse()
 
-    def __handleMouse(self, grid: Grid):
+    def __handleMouse(self, grid: Simulation):
         pos = self.mouse.getIndex(pg.mouse.get_pos())
         if pg.mouse.get_pressed()[0]: #left
             grid.paintCell(pos, Cell(self.mouse.selectedType), self.mouse.r)
         if pg.mouse.get_pressed()[2]: #right
             grid.paintCell(pos, None, self.mouse.r)
 
-    def handleEvents(self, grid: Grid):
+    def handleEvents(self, grid: Simulation):
         global INDEX
         for event in pg.event.get():
             match event.type:
