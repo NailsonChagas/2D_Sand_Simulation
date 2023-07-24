@@ -33,6 +33,24 @@ class Grid:
         with open(path, 'w') as json_file:
             json.dump(grid_data, json_file, indent=4)
 
+    def getNeighbors(self, pos: tuple[int, int]):
+        i, j = pos
+        neighbors = [{"row": None, "col": None, "Cell": None} for _ in range(8)]
+        
+        # Define as posições dos vizinhos em torno da célula (i, j).
+        for idx, (row, col) in enumerate([
+            (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
+            (i, j - 1), (i, j + 1),
+            (i + 1, j - 1), (i + 1, j), (i + 1, j + 1)
+        ]):
+            if 0 <= row < ROWS and 0 <= col < COLS:
+                neighbors[idx]["row"] = row
+                neighbors[idx]["col"] = col
+                neighbors[idx]["Cell"] = self.matrix[row][col]
+        
+        return neighbors
+
+
     @staticmethod
     def loadGrid(path:str):
         aux = Grid()
