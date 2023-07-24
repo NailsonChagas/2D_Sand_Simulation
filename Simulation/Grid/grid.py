@@ -1,5 +1,6 @@
 from Simulation.Grid.cell import Cell
 from Simulation.Utils import ROWS, COLS, json
+from multiprocessing import Pool
 
 class Grid:
     def __init__(self):
@@ -35,7 +36,7 @@ class Grid:
         # Define as posições dos vizinhos em torno da célula (i, j).
         for idx, (row, col) in enumerate([
             (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
-            (i, j - 1), (i, j + 1),
+            (i, j - 1),                     (i, j + 1),
             (i + 1, j - 1), (i + 1, j), (i + 1, j + 1)
         ]):
             if 0 <= row < ROWS and 0 <= col < COLS:
@@ -44,23 +45,12 @@ class Grid:
                 neighbors[idx]["Cell"] = self.matrix[row][col]  
         return neighbors
 
-    # @staticmethod
-    # def loadGrid(path:str):
-    #     aux = Grid()
-    #     with open(path, "r") as data:
-    #         gridJson = json.load(data)
-    #     for i, row in enumerate(gridJson):
-    #         for j, c in enumerate(row):
-    #             if c == "None": aux.paintCell((i,j), None)
-    #             else: aux.paintCell((i,j), Cell(c))
-    #     return aux
-
 class Simulation(Grid):
     def __init__(self, debug:bool=False): 
         super().__init__() 
         self.debug = debug
         self.debugAux = 0
-        self.pause = False
+        self.pause = True
 
     @staticmethod
     def loadGrid(path:str):
@@ -80,9 +70,15 @@ class Simulation(Grid):
                 if cell == None: continue
                 neighbors = self.getNeighbors((i,j))
                 self.__cellularAutomata((i,j), neighbors)
-    
+
     def __cellularAutomata(self, pos:tuple[int,int], neighbors:list[None | Cell]):
         i, j = pos
         if self.debug: 
             print(f"i:{self.debugAux} / pos:{pos} / cell: {self.matrix[i][j].name}")
             self.debugAux += 1
+        
+        match self.matrix[i][j].name:
+            case "SMOKE": pass
+            case "SAND": pass
+            case "WATER": pass
+            case "ROCK": pass

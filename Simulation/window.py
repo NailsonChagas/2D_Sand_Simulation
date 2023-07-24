@@ -3,7 +3,7 @@ from Simulation.Utils import *
 from Simulation.Grid import Simulation, Cell
 
 INDEX = (-1, -1)
-RADIUS = -1
+RADIUS = 1
 
 class Window:
     def __init__(self, name: str, savePath: str, load:bool = False) -> None:
@@ -43,7 +43,7 @@ class Window:
     def __drawInfo(self):
         font = getFont(30)
         text = font.render(
-            f"INDEX: {INDEX}  Radius: {RADIUS}", 
+            f"INDEX: {INDEX}  Radius: {RADIUS} Pause:{self.grid.pause}", 
             1, COLORS["BLACK"]
         )
         self.WINDOW.blit(
@@ -120,5 +120,6 @@ class Events:
                         case pg.K_3: self.mouse.selectedType = "ROCK"
                         case pg.K_4: self.mouse.selectedType = "SMOKE"
                         case pg.K_r: grid.reset()
+                        case pg.K_p: grid.pause = not grid.pause
             self.__handleMouse(grid)
         return True
