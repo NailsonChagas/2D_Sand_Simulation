@@ -25,9 +25,9 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - Allow increasing and decreasing the brush radius;
 - Save the grid as JSON;
 - Load the save from JSON;
+- remove VOID Cell, use None in the matrix instead (Case None: paint white)
 
 ## To do:
-- remove VOID Cell, use None in the matrix instead (Case None: paint white)
 - perform the simulations and cellular automata.
 
 ## Known bugs:
@@ -42,8 +42,10 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - scrolling up: expand the radius of the circumference;
 - scrolling down: reduce the radius of the circumference.
 
-## Available cells:
+## Controls:
 - SAND: 1
 - WATER: 2
 - ROCK: 3
 - SMOKE: 4
+- Pause: p
+- Reset: r
