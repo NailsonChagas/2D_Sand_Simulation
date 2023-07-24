@@ -56,6 +56,7 @@ class Window:
 
     def __draw(self):
         self.WINDOW.fill(BG_COLOR)
+        self.grid.update()
         self.__drawGrid()
         self.__drawOptionalGrid()
         self.__drawInfo()

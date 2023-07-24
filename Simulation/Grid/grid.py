@@ -44,9 +44,27 @@ class Grid:
                 neighbors[idx]["Cell"] = self.matrix[row][col]  
         return neighbors
 
+    # @staticmethod
+    # def loadGrid(path:str):
+    #     aux = Grid()
+    #     with open(path, "r") as data:
+    #         gridJson = json.load(data)
+    #     for i, row in enumerate(gridJson):
+    #         for j, c in enumerate(row):
+    #             if c == "None": aux.paintCell((i,j), None)
+    #             else: aux.paintCell((i,j), Cell(c))
+    #     return aux
+
+class Simulation(Grid):
+    def __init__(self, debug:bool=False): 
+        super().__init__() 
+        self.debug = debug
+        self.debugAux = 0
+        self.pause = False
+
     @staticmethod
     def loadGrid(path:str):
-        aux = Grid()
+        aux = Simulation()
         with open(path, "r") as data:
             gridJson = json.load(data)
         for i, row in enumerate(gridJson):
@@ -56,18 +74,15 @@ class Grid:
         return aux
     
     def update(self):
-        pass
-
-class Simulation(Grid):
-    def __init__(self): pass 
-    
-    def loop(self):
-        for i, line in enumerate(self.grid.matrix):
+        if self.pause: return
+        for i, line in enumerate(self.matrix):
             for j, cell in enumerate(line):
                 if cell == None: continue
                 neighbors = self.getNeighbors((i,j))
                 self.__cellularAutomata((i,j), neighbors)
     
     def __cellularAutomata(self, pos:tuple[int,int], neighbors:list[None | Cell]):
-        print(pos, neighbors)
-        pass
+        i, j = pos
+        if self.debug: 
+            print(f"i:{self.debugAux} / pos:{pos} / cell: {self.matrix[i][j].name}")
+            self.debugAux += 1
