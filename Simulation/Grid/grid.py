@@ -84,11 +84,14 @@ class Simulation(Grid):
         
         match self.matrix[i][j].name:
             case "SAND": 
+                # sem aplicar fisica
                 if not self.matrix[i][j].move: return 
-                if neighbors[6]["cell"] == None: # queda simples
+                # queda simples e densidade
+                if neighbors[6]["cell"] == None or neighbors[6]["cell"].name == "WATER": 
                     self.swapCellsPosition(pos, neighbors[6]["pos"])
                     return neighbors[6]["pos"]
-                if neighbors[6]["cell"] != None: # colisão com outra célula 
+                # colisão com outra célula
+                if neighbors[6]["cell"] != None and neighbors[1]["cell"] == None: # colisão com outra célula 
                     l = neighbors[5]["cell"] is None
                     r = neighbors[7]["cell"] is None
                     if l == False and r == False: return
@@ -101,7 +104,7 @@ class Simulation(Grid):
                     aux = random.choice([neighbors[5]["pos"], neighbors[7]["pos"]])
                     self.swapCellsPosition(pos, aux)
                     return aux
-                    
+                 
             case "SMOKE": pass
             case "WATER": pass
             case "ROCK": pass
