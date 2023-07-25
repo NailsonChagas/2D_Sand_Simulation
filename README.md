@@ -30,11 +30,9 @@ This project is being done as a hobby so that I can introduce myself to the univ
     - SAND
     - WATER
     - ROCK (does not have any movement or rules, its sole role is to serve as a barrier/obstacle)
+    - SMOKE
 
 ## To do:
-- perform the simulations and cellular automata:
-    - SMOKE
-- add Shadder ??????
 
 ## Known bugs:
 
