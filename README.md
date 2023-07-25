@@ -28,12 +28,13 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - remove VOID Cell, use None in the matrix instead (Case None: paint white)
 - perform the simulations and cellular automata:
     - SAND
+    - WATER
+    - ROCK (does not have any movement or rules, its sole role is to serve as a barrier/obstacle)
 
 ## To do:
 - perform the simulations and cellular automata:
-    - WATER
     - SMOKE
-    - ROCK
+- add Shadder ??????
 
 ## Known bugs:
 
