@@ -1,6 +1,6 @@
+import random
 from Simulation.Grid.cell import Cell
 from Simulation.Utils import ROWS, COLS, json
-from multiprocessing import Pool
 
 class Grid:
     def __init__(self):
@@ -22,6 +22,9 @@ class Grid:
 
     def swapCellsPosition(self, cellPosition1: tuple[int, int], cellPosition2: tuple[int, int]):
         (row1, col1), (row2, col2) = cellPosition1, cellPosition2
+        if row1 >= ROWS or row2 >= ROWS: return #colisão baixo
+        if col1 >= COLS or col2 >= COLS: return #colisão direita
+        if col1 < 0 or col2 < 0: return #colisão esquerda
         self.matrix[row1][col1], self.matrix[row2][col2] = self.matrix[row2][col2], self.matrix[row1][col1]
 
     def saveGrid(self, path: str):
@@ -32,17 +35,16 @@ class Grid:
 
     def getNeighbors(self, pos: tuple[int, int]):
         i, j = pos
-        neighbors = [{"row": None, "col": None, "Cell": None} for _ in range(8)]
+        neighbors = [{"pos": None, "cell": None} for _ in range(8)]
         # Define as posições dos vizinhos em torno da célula (i, j).
         for idx, (row, col) in enumerate([
             (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
             (i, j - 1),                     (i, j + 1),
             (i + 1, j - 1), (i + 1, j), (i + 1, j + 1)
         ]):
+            neighbors[idx]["pos"] = (row, col)
             if 0 <= row < ROWS and 0 <= col < COLS:
-                neighbors[idx]["row"] = row
-                neighbors[idx]["col"] = col
-                neighbors[idx]["Cell"] = self.matrix[row][col]  
+                neighbors[idx]["cell"] = self.matrix[row][col]  
         return neighbors
 
 class Simulation(Grid):
@@ -65,11 +67,14 @@ class Simulation(Grid):
     
     def update(self):
         if self.pause: return
+        processed_cells = set()
+
         for i, line in enumerate(self.matrix):
             for j, cell in enumerate(line):
-                if cell == None: continue
+                if cell is None or (i, j) in processed_cells: continue
                 neighbors = self.getNeighbors((i,j))
-                self.__cellularAutomata((i,j), neighbors)
+                aux = self.__cellularAutomata((i,j), neighbors)
+                processed_cells.add(aux if aux is not None else (i,j))
 
     def __cellularAutomata(self, pos:tuple[int,int], neighbors:list[None | Cell]):
         i, j = pos
@@ -78,7 +83,25 @@ class Simulation(Grid):
             self.debugAux += 1
         
         match self.matrix[i][j].name:
+            case "SAND": 
+                if not self.matrix[i][j].move: return 
+                if neighbors[6]["cell"] == None: # queda simples
+                    self.swapCellsPosition(pos, neighbors[6]["pos"])
+                    return neighbors[6]["pos"]
+                if neighbors[6]["cell"] != None: # colisão com outra célula 
+                    l = neighbors[5]["cell"] is None
+                    r = neighbors[7]["cell"] is None
+                    if l == False and r == False: return
+                    if l == False and r == True:
+                        self.swapCellsPosition(pos, neighbors[7]["pos"])
+                        return neighbors[7]["pos"]
+                    if l == True and r == False:
+                        self.swapCellsPosition(pos, neighbors[5]["pos"])
+                        return neighbors[5]["pos"]
+                    aux = random.choice([neighbors[5]["pos"], neighbors[7]["pos"]])
+                    self.swapCellsPosition(pos, aux)
+                    return aux
+                    
             case "SMOKE": pass
-            case "SAND": pass
             case "WATER": pass
             case "ROCK": pass

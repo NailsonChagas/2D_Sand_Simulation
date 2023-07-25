@@ -56,9 +56,10 @@ class Window:
 
     def __draw(self):
         self.WINDOW.fill(BG_COLOR)
-        self.grid.update()
+        
         self.__drawGrid()
-        self.__drawOptionalGrid()
+        self.grid.update()
+        if DRAW_GRID: self.__drawOptionalGrid()
         self.__drawInfo()
         pg.display.update()
     
@@ -103,6 +104,7 @@ class Events:
     def handleEvents(self, grid: Simulation):
         global INDEX
         for event in pg.event.get():
+            self.__handleMouse(grid)
             match event.type:
                 case pg.QUIT: 
                     print("Event: close button")
@@ -120,6 +122,5 @@ class Events:
                         case pg.K_3: self.mouse.selectedType = "ROCK"
                         case pg.K_4: self.mouse.selectedType = "SMOKE"
                         case pg.K_r: grid.reset()
-                        case pg.K_p: grid.pause = not grid.pause
-            self.__handleMouse(grid)
+                        case pg.K_p: grid.pause = not grid.pause   
         return True
