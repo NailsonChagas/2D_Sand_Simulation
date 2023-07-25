@@ -26,9 +26,14 @@ This project is being done as a hobby so that I can introduce myself to the univ
 - Save the grid as JSON;
 - Load the save from JSON;
 - remove VOID Cell, use None in the matrix instead (Case None: paint white)
+- perform the simulations and cellular automata:
+    - SAND
 
 ## To do:
-- perform the simulations and cellular automata.
+- perform the simulations and cellular automata:
+    - WATER
+    - SMOKE
+    - ROCK
 
 ## Known bugs:
 
