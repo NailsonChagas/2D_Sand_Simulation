@@ -110,6 +110,49 @@ class Simulation(Grid):
                     return aux
 
             case "WATER": 
+                if neighbors[5]["cell"] != None and neighbors[6]["cell"] != None and neighbors[7]["cell"] != None:
+                    if self.matrix[i][j].direction == None:
+                        if neighbors[3]["cell"] == None and neighbors[4]["cell"] == None: # 2 dir possivel
+                            self.matrix[i][j].direction = random.choice(["l", "r"])
+                            if self.matrix[i][j].direction == "l":
+                                self.swapCellsPosition(pos, neighbors[3]["pos"])
+                                return neighbors[3]["pos"]
+                            self.swapCellsPosition(pos, neighbors[4]["pos"])
+                            return neighbors[4]["pos"]  
+                        
+                        if neighbors[3]["cell"] == None and neighbors[4]["pos"][1] < COLS: # só r possivel
+                            self.matrix[i][j].direction = "r"
+                            self.swapCellsPosition(pos, neighbors[4]["pos"])
+                            return neighbors[4]["pos"]  
+                        
+                        if neighbors[4]["cell"] == None and neighbors[3]["pos"][1] >= 0: # só l possivel
+                            self.matrix[i][j].direction = "l"
+                            self.swapCellsPosition(pos, neighbors[3]["pos"])
+                            return neighbors[3]["pos"]
+                    
+                    if self.matrix[i][j].direction == "l": #esquerda se possivel, caso n, direita
+                        if neighbors[3]["pos"][1] < 0 or neighbors[3]["cell"] != None:
+                            self.matrix[i][j].direction = "r"
+                            if neighbors[4]["cell"] == None:
+                                self.swapCellsPosition(pos, neighbors[4]["pos"])
+                                return neighbors[4]["pos"]
+                            return
+                        self.swapCellsPosition(pos, neighbors[3]["pos"])
+                        return neighbors[3]["pos"]
+                    
+                    if self.matrix[i][j].direction == "r": #direita se possivel, caso n, esquerda
+                        if neighbors[4]["pos"][1] >= COLS or neighbors[4]["cell"] != None:
+                            self.matrix[i][j].direction = "l"
+                            if neighbors[3]["cell"] == None:
+                                self.swapCellsPosition(pos, neighbors[3]["pos"])
+                                return neighbors[3]["pos"]
+                            return
+                        self.swapCellsPosition(pos, neighbors[4]["pos"])
+                        return neighbors[4]["pos"]
+                    
+                    self.matrix[i][j].direction == None #nenhuma direção possivel
+                    return
+
                 # colisão em baixo com outra célula
                 if neighbors[6]["cell"] != None:  
                     l = neighbors[5]["cell"] is None
