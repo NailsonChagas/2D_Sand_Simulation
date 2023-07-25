@@ -1,6 +1,6 @@
 # 2D Sand Simulation 
 
-This project is being done as a hobby so that I can introduce myself to the universe of physical simulations in two dimensions and cellular automata
+This project was done as a hobby so that I could introduce myself to the world of cellular automata.
 
 ## Requirements to run the project:
 - have all the packages from the requirements.txt file installed;
