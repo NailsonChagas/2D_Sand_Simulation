@@ -124,7 +124,6 @@ class Simulation(Grid):
                             self.matrix[i][j].direction = "r"
                             self.swapCellsPosition(pos, neighbors[4]["pos"])
                             return neighbors[4]["pos"]  
-                        
                         if neighbors[4]["cell"] == None and neighbors[3]["pos"][1] >= 0: # só l possivel
                             self.matrix[i][j].direction = "l"
                             self.swapCellsPosition(pos, neighbors[3]["pos"])
@@ -139,7 +138,6 @@ class Simulation(Grid):
                             return
                         self.swapCellsPosition(pos, neighbors[3]["pos"])
                         return neighbors[3]["pos"]
-                    
                     if self.matrix[i][j].direction == "r": #direita se possivel, caso n, esquerda
                         if neighbors[4]["pos"][1] >= COLS or neighbors[4]["cell"] != None:
                             self.matrix[i][j].direction = "l"
@@ -169,4 +167,3 @@ class Simulation(Grid):
                     return aux
 
             case "SMOKE": pass
-            case "ROCK": pass
