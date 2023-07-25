@@ -88,7 +88,7 @@ class Simulation(Grid):
                 if not self.matrix[i][j].move: return 
                 
                 # colisão com outra célula
-                if neighbors[6]["cell"] != None and neighbors[1]["cell"] == None: # colisão com outra célula 
+                if neighbors[6]["cell"] != None:  
                     l = neighbors[5]["cell"] is None
                     r = neighbors[7]["cell"] is None
                     if l == False and r == False: return
