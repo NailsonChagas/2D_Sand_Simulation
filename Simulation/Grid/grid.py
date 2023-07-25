@@ -22,6 +22,7 @@ class Grid:
 
     def swapCellsPosition(self, cellPosition1: tuple[int, int], cellPosition2: tuple[int, int]):
         (row1, col1), (row2, col2) = cellPosition1, cellPosition2
+        if row1 < 0 or row2 < 0: return #colisão cima
         if row1 >= ROWS or row2 >= ROWS: return #colisão baixo
         if col1 >= COLS or col2 >= COLS: return #colisão direita
         if col1 < 0 or col2 < 0: return #colisão esquerda
@@ -84,7 +85,7 @@ class Simulation(Grid):
             self.debugAux += 1
 
         # queda simples
-        if neighbors[6]["cell"] == None:
+        if neighbors[6]["cell"] == None and self.matrix[i][j].name != "SMOKE":
             self.swapCellsPosition(pos, neighbors[6]["pos"])
             return neighbors[6]["pos"]
         
@@ -166,4 +167,21 @@ class Simulation(Grid):
                     self.swapCellsPosition(pos, aux)
                     return aux
 
-            case "SMOKE": pass
+            case "SMOKE": 
+                if self.matrix[i][j].first != True: 
+                    if random.random() < 0.03: # 3% de chance de deixa de existir
+                        self.matrix[i][j] = None
+                        return
+                self.matrix[i][j].first = False    
+                
+                # caso ao menos uma das 3 células acima estão livres
+                none_neighbors = [neighbor for neighbor in neighbors[:3] if neighbor["cell"] is None]
+                if none_neighbors:
+                    aux = random.choice(none_neighbors)
+                    self.swapCellsPosition(pos, aux["pos"])
+                    return aux["pos"]
+                
+                # menos denso que água e areia
+                if neighbors[1]["cell"].name == "SAND" or neighbors[1]["cell"].name == "WATER":
+                    self.swapCellsPosition(pos, neighbors[1]["pos"])
+                    return neighbors[1]["pos"]
