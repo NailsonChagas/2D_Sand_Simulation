@@ -78,16 +78,39 @@ class Simulation(Grid):
 
     def __cellularAutomata(self, pos:tuple[int,int], neighbors:list[None | Cell]):
         i, j = pos
+        if not self.matrix[i][j].move: return
         if self.debug: 
             print(f"i:{self.debugAux} / pos:{pos} / cell: {self.matrix[i][j].name}")
             self.debugAux += 1
+
+        # queda simples
+        if neighbors[6]["cell"] == None:
+            self.swapCellsPosition(pos, neighbors[6]["pos"])
+            return neighbors[6]["pos"]
         
         match self.matrix[i][j].name:
             case "SAND": 
-                # sem aplicar fisica
-                if not self.matrix[i][j].move: return 
-                
+                # densidade
+                if neighbors[6]["cell"].name == "WATER": 
+                    self.swapCellsPosition(pos, neighbors[6]["pos"])
+                    return neighbors[6]["pos"]
                 # colisão com outra célula
+                if neighbors[6]["cell"] != None:  
+                    l = neighbors[5]["cell"] is None or neighbors[5]["cell"].name == "WATER"
+                    r = neighbors[7]["cell"] is None or neighbors[7]["cell"].name == "WATER"
+                    if l == False and r == False: return
+                    if l == False and r == True:
+                        self.swapCellsPosition(pos, neighbors[7]["pos"])
+                        return neighbors[7]["pos"]
+                    if l == True and r == False:
+                        self.swapCellsPosition(pos, neighbors[5]["pos"])
+                        return neighbors[5]["pos"]
+                    aux = random.choice([neighbors[5]["pos"], neighbors[7]["pos"]])
+                    self.swapCellsPosition(pos, aux)
+                    return aux
+
+            case "WATER": 
+                # colisão em baixo com outra célula
                 if neighbors[6]["cell"] != None:  
                     l = neighbors[5]["cell"] is None
                     r = neighbors[7]["cell"] is None
@@ -101,12 +124,6 @@ class Simulation(Grid):
                     aux = random.choice([neighbors[5]["pos"], neighbors[7]["pos"]])
                     self.swapCellsPosition(pos, aux)
                     return aux
-                
-                # queda simples e densidade
-                if neighbors[6]["cell"] == None or neighbors[6]["cell"].name == "WATER": 
-                    self.swapCellsPosition(pos, neighbors[6]["pos"])
-                    return neighbors[6]["pos"]
-                 
+
             case "SMOKE": pass
-            case "WATER": pass
             case "ROCK": pass

@@ -5,6 +5,7 @@ class Cell:
         self.name = type
         self.color = ""
         self.move = False
+        self.direction = None
         match type:
             case "SMOKE": self.color = COLORS["GRAY"]; self.move = True
             case "SAND": self.color = COLORS["YELLOW"]; self.move = True
