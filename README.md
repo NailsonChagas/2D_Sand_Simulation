@@ -33,6 +33,7 @@ This project was done as a hobby so that I could introduce myself to the world o
     - SMOKE
 
 ## To do:
+- study where I can use Numba to improve performance
 
 ## Known bugs:
 
